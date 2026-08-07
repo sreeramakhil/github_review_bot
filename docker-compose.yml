@@ -1,0 +1,18 @@
+services:
+
+  review-bot:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      # Persists incremental-review checkpoints + webhook dedup state
+      # across container restarts.
+      - review_data:/app/data
+
+    restart: unless-stopped
+
+volumes:
+
+  review_data:
